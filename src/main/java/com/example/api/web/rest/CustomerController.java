@@ -30,8 +30,6 @@ public class CustomerController {
 
     private AddressService addressService;
 
-
-
     @Autowired
     CustomerRepository customerRepository;
 
@@ -52,12 +50,6 @@ public class CustomerController {
     public Customer findById(@PathVariable Long id) {
         return service.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with id=" + id + " not found"));
-    }
-
-    @PostMapping
-    public ResponseEntity insertCustomer(@Valid @RequestBody Customer customer) {
-        Customer customerSaved = service.save(customer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(customerSaved);
     }
 
 
