@@ -1,12 +1,12 @@
-package com.example.api.domain;
+package com.example.api.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 public class Customer {
@@ -23,6 +23,11 @@ public class Customer {
 	@NotEmpty
 	@Email
 	private String email;
+
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonManagedReference
+	private List<CustomerAddress> customerAddresses;
 
 	public Long getId() {
 		return id;
@@ -46,6 +51,14 @@ public class Customer {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<CustomerAddress> getEnderecos() {
+		return customerAddresses;
+	}
+
+	public void setEnderecos(List<CustomerAddress> customerAddresses) {
+		this.customerAddresses = customerAddresses;
 	}
 
 }
